@@ -1,2 +1,5 @@
-# LifeSomme - a Lifesum clone
-A Lifesum clone made with NextJS, Supabase, TailwindCSS in under 2 weeks.
+# LifeSomme - A Lifesum clone
+
+## Getting Started
+
+A Lifesum clone made with Next.js 13.5, Supabase, TailwindCSS and Typescript.
