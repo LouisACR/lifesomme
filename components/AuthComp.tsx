@@ -1,11 +1,8 @@
 "use client";
 
-import {
-  useSessionContext,
-  useSupabaseClient,
-} from "@supabase/auth-helpers-react";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/navigation";
-import React, { FormEvent, useState } from "react";
+import { useState } from "react";
 import Card from "./Card";
 import { FcGoogle } from "react-icons/fc";
 import { BsLinkedin } from "react-icons/bs";
@@ -21,6 +18,13 @@ const AuthComp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<AuthError | null>(null);
+
+  const session = supabaseClient.auth.getSession();
+  Promise.resolve(session).then((session) => {
+    if (session) {
+      router.push("/");
+    }
+  });
 
   const handleSignInWithOAuth = async (provider: Provider) => {
     const { data, error } = await supabaseClient.auth.signInWithOAuth({
@@ -60,7 +64,7 @@ const AuthComp = () => {
         Login with Google
       </Button>
       <Button
-        onClick={() => handleSignInWithOAuth("linkedin")}
+        onClick={() => handleSignInWithOAuth("linkedin_oidc")}
         size="lg"
         variant="outline"
         className="group hover:text-black/80"
