@@ -2,7 +2,7 @@
 
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Card from "./Card";
 import { FcGoogle } from "react-icons/fc";
 import { BsLinkedin } from "react-icons/bs";
@@ -20,11 +20,14 @@ const AuthComp = () => {
   const [error, setError] = useState<AuthError | null>(null);
 
   const session = supabaseClient.auth.getSession();
-  Promise.resolve(session).then((session) => {
-    if (session) {
-      router.push("/");
-    }
-  });
+  useEffect(() => {
+    Promise.resolve(session).then((session) => {
+      if (session) {
+        router.push("/");
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSignInWithOAuth = async (provider: Provider) => {
     const { data, error } = await supabaseClient.auth.signInWithOAuth({
