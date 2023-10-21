@@ -11,9 +11,14 @@ export async function GET(request: Request) {
     cookies: () => cookieStore,
   });
 
-  await supabase.auth.signOut();
+  const a = await supabase.auth.signOut();
 
-  return NextResponse.redirect(`${requestUrl.origin}/login`, {
-    status: 301,
+  if (a.error) {
+    return new NextResponse(JSON.stringify(a), {
+      status: 501,
+    });
+  }
+  return new NextResponse(JSON.stringify(a), {
+    status: 200,
   });
 }
