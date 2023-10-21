@@ -12,11 +12,14 @@ import Link from "next/link";
 import { AuthError, Provider } from "@supabase/supabase-js";
 import { cn } from "@/libs/utils";
 
-const AuthComp = () => {
+const RegisterComp = () => {
   const supabaseClient = useSupabaseClient();
   const router = useRouter();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
   const [error, setError] = useState<AuthError | null>(null);
 
   const user = supabaseClient.auth.getUser();
@@ -41,11 +44,22 @@ const AuthComp = () => {
     }
   };
 
-  const handleSignIn = async (e: any) => {
+  const handleSignUp = async (e: any) => {
     e.preventDefault();
-    const { data, error } = await supabaseClient.auth.signInWithPassword({
+    if (confirm !== password) {
+      setError({ message: "Passwords don't match" } as AuthError);
+      return;
+    }
+    const { data, error } = await supabaseClient.auth.signUp({
       email,
       password,
+      options: {
+        data: {
+          fullName: `${firstName} ${lastName}`,
+          firstName,
+          lastName,
+        },
+      },
     });
     setError(error);
     if (data.user) {
@@ -55,7 +69,7 @@ const AuthComp = () => {
   return (
     <Card className="mx-auto w-[350px] lg:w-[400px] gap-y-3">
       <h1 className="mx-auto text-xl font-medium text-stone-700 mb-4">
-        Log into your account
+        Create your account
       </h1>
       <Button
         onClick={() => handleSignInWithOAuth("google")}
@@ -64,7 +78,7 @@ const AuthComp = () => {
         className="group hover:text-black/80"
       >
         <FcGoogle className="group-hover:opacity-70 mr-2 text-xl transition-all" />
-        Login with Google
+        Register with Google
       </Button>
       <Button
         onClick={() => handleSignInWithOAuth("linkedin_oidc")}
@@ -73,7 +87,7 @@ const AuthComp = () => {
         className="group hover:text-black/80"
       >
         <BsLinkedin className="text-[#0e76a8] group-hover:opacity-70 mr-2 text-xl transition-all" />
-        Login with LinkedIn
+        Register with LinkedIn
       </Button>
       <hr className="my-2" />
       <span className="relative -mb-8 -top-8 mx-auto bg-stone-50 px-4 font-medium">
@@ -86,7 +100,21 @@ const AuthComp = () => {
       >
         {error?.message}
       </div>
-      <form className="flex flex-col gap-y-3" onSubmit={handleSignIn}>
+      <form className="flex flex-col gap-y-3" onSubmit={handleSignUp}>
+        <Input
+          type="text"
+          onChange={(e) => setFirstName(e.target.value)}
+          value={firstName}
+          required
+          placeholder="Your First name"
+        />
+        <Input
+          type="text"
+          onChange={(e) => setLastName(e.target.value)}
+          value={lastName}
+          required
+          placeholder="Your Last name"
+        />
         <Input
           type="email"
           onChange={(e) => setEmail(e.target.value)}
@@ -101,15 +129,22 @@ const AuthComp = () => {
           onChange={(e) => setPassword(e.target.value)}
           value={password}
         />
+        <Input
+          type="password"
+          placeholder="Please confirm your password"
+          required
+          onChange={(e) => setConfirm(e.target.value)}
+          value={confirm}
+        />
         <Button size="lg" type="submit">
-          LOG IN
+          CREATE MY ACCOUNT
         </Button>
       </form>
       <Button variant="link" className="text-md" asChild>
-        <Link href="/register">I don&apos;t have an account yet</Link>
+        <Link href="/login">I already have an account</Link>
       </Button>
     </Card>
   );
 };
 
-export default AuthComp;
+export default RegisterComp;
