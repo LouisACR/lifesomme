@@ -21,7 +21,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn(lora.className, "bg-blanc scroll-smooth")}>
+      <body
+        className={cn(
+          lora.className,
+          "bg-blanc dark:bg-stone-900 scroll-smooth"
+        )}
+      >
         <ThemeProvider attribute="class" defaultTheme="light">
           <SupabaseProvider>
             <UserProvider>

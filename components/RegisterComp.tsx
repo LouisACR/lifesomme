@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Card from "./Card";
 import { FcGoogle } from "react-icons/fc";
+import { RiTwitterXFill } from "react-icons/ri";
 import { BsLinkedin } from "react-icons/bs";
 import { Button } from "./Button";
 import { Input } from "./Input";
@@ -54,6 +55,7 @@ const RegisterComp = () => {
       email,
       password,
       options: {
+        emailRedirectTo: `${location.origin}/auth/callback`,
         data: {
           fullName: `${firstName} ${lastName}`,
           firstName,
@@ -75,27 +77,38 @@ const RegisterComp = () => {
         onClick={() => handleSignInWithOAuth("google")}
         size="lg"
         variant="outline"
-        className="group hover:text-black/80"
+        className="group hover:text-black/80 dark:hover:text-white/80"
       >
         <FcGoogle className="group-hover:opacity-70 mr-2 text-xl transition-all" />
         Register with Google
       </Button>
       <Button
+        onClick={() => handleSignInWithOAuth("twitter")}
+        size="lg"
+        variant="outline"
+        className="group hover:text-black/80 dark:hover:text-white/80"
+      >
+        <RiTwitterXFill className="group-hover:opacity-70 -ml-5 mr-5 text-left text-xl transition-all" />
+        Register with X
+      </Button>
+      <Button
         onClick={() => handleSignInWithOAuth("linkedin_oidc")}
         size="lg"
         variant="outline"
-        className="group hover:text-black/80"
+        className="group hover:text-black/80 dark:hover:text-white/80"
       >
         <BsLinkedin className="text-[#0e76a8] group-hover:opacity-70 mr-2 text-xl transition-all" />
         Register with LinkedIn
       </Button>
       <hr className="my-2" />
-      <span className="relative -mb-8 -top-8 mx-auto bg-stone-50 px-4 font-medium">
+      <span className="relative -mb-8 -top-8 mx-auto bg-stone-50 dark:bg-stone-950 px-4 font-medium">
         OR
       </span>
       <div
         className={cn(
-          error ? "p-2 px-4 bg-red-100 w-full rounded-md" : "hidden"
+          error
+            ? "p-2 px-4 bg-red-100 dark:bg-red-800 w-full rounded-md"
+            : "hidden"
         )}
       >
         {error?.message}
@@ -105,6 +118,7 @@ const RegisterComp = () => {
           type="text"
           onChange={(e) => setFirstName(e.target.value)}
           value={firstName}
+          autoComplete="given-name"
           required
           placeholder="Your First name"
         />
@@ -112,6 +126,7 @@ const RegisterComp = () => {
           type="text"
           onChange={(e) => setLastName(e.target.value)}
           value={lastName}
+          autoComplete="family-name"
           required
           placeholder="Your Last name"
         />
@@ -119,12 +134,14 @@ const RegisterComp = () => {
           type="email"
           onChange={(e) => setEmail(e.target.value)}
           value={email}
+          autoComplete="email"
           required
           placeholder="Your Email address"
         />
         <Input
           type="password"
           placeholder="Your Password"
+          autoComplete="new-password"
           required
           onChange={(e) => setPassword(e.target.value)}
           value={password}
@@ -132,6 +149,7 @@ const RegisterComp = () => {
         <Input
           type="password"
           placeholder="Please confirm your password"
+          autoComplete="new-password"
           required
           onChange={(e) => setConfirm(e.target.value)}
           value={confirm}
