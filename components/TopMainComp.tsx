@@ -10,7 +10,9 @@ import { useState } from "react";
 import { Button } from "./Button";
 import { cn } from "@/libs/utils";
 import { Nunito_Sans } from "next/font/google";
-import { LuSettings, LuUser2 } from "react-icons/lu";
+import { LuChevronDown, LuSettings, LuUser2 } from "react-icons/lu";
+import ThemeToggle from "./ThemeToggle";
+import Card from "./Card";
 
 const nunito = Nunito_Sans({ subsets: ["latin"] });
 
@@ -19,18 +21,17 @@ const TopMainComp = () => {
   const totalKcal = 3030;
   const kcalBurned = 539;
   return (
-    <div className="cool-gradient w-full h-[45%] md:h-2/5 max-h-[500px]">
+    <div className="cool-gradient w-full h-[350px] md:h-[425px]">
       <div className="relative flex flex-col max-w-screen-2xl mx-auto z-10">
-        <div className="absolute top-5 left-5 h-7 w-7 lg:left-10 lg:top-11 lg:w-fit lg:h-fit transition-all">
-          <LuSettings className="text-white h-full w-full lg:hidden" />
-          <Button variant="link" className="hidden text-xl lg:flex">
-            <LuSettings className="text-white h-7 w-7 mr-2" />
-            Settings
-          </Button>
+        <div className="absolute group top-5 left-5 h-7 w-7 lg:left-10 lg:top-11 lg:w-fit lg:h-fit transition-all hover:text-stone-100">
+          <ThemeToggle className="text-white h-full w-full" />
         </div>
-        <div className="absolute top-5 right-5 h-7 w-7 lg:right-10 lg:top-11 lg:w-fit lg:h-fit transition-all">
-          <LuUser2 className="text-white h-full w-full lg:hidden" />
-          <Button variant="link" className="hidden text-xl lg:flex">
+        <div className="group absolute top-5 right-5 h-7 w-7 lg:right-10 lg:top-11 lg:w-fit lg:h-fit transition-all ">
+          <LuUser2 className="text-white group-hover:text-stone-100 h-full w-full lg:hidden" />
+          <Button
+            variant="ghost"
+            className="hidden group-hover:text-stone-100 text-xl text-white lg:flex"
+          >
             <LuUser2 className="text-white h-7 w-7 mr-2" />
             Profile
           </Button>
@@ -75,6 +76,14 @@ const TopMainComp = () => {
               KCAL LEFT
             </span>
           </CircularProgressbarWithChildren>
+        </div>
+        <div
+          className={cn(
+            nunito.className,
+            "font-medium tracking-wider inline-flex mx-auto mt-4 text-white hover:text-stone-100 cursor-pointer"
+          )}
+        >
+          SEE STATS <LuChevronDown className="ml-1 relative -top-0.5 h-6 w-6" />
         </div>
       </div>
     </div>
