@@ -86,7 +86,7 @@ const AuthComp = () => {
         Login with LinkedIn
       </Button>
       <hr className="my-2" />
-      <span className="relative -mb-8 -top-8 mx-auto bg-stone-50 dark:bg-stone-950 px-4 font-medium">
+      <span className="relative -mb-8 -top-8 mx-auto bg-stone-50 dark:bg-stone-800 px-4 font-medium">
         OR
       </span>
       <div
