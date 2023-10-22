@@ -6,7 +6,6 @@
   border-radius: 0rem;
   position: absolute;
   overflow: hidden;
-  z-index: -1;
   background: linear-gradient(
       26.62deg,
       rgba(214, 147, 92, 0.8) 20.64%,
@@ -28,7 +27,6 @@
       rgba(78, 173, 235, 0) 98.72%,
       #d3e4ff
     );
-
   background-blend-mode: normal, hard-light, normal, darken, normal, normal;
 }
 

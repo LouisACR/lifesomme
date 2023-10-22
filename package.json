@@ -19,6 +19,7 @@
     "next": "^13.5.7-canary.13",
     "next-themes": "^0.2.1",
     "react": "^18",
+    "react-circular-progressbar": "^2.1.0",
     "react-dom": "^18",
     "react-icons": "^4.11.0",
     "stripe": "^14.1.0",
