@@ -16,7 +16,11 @@ import Card from "./Card";
 
 const nunito = Nunito_Sans({ subsets: ["latin"] });
 
-const TopMainComp = () => {
+interface TopMainCompProps {
+  date: Date;
+}
+
+const TopMainComp: React.FC<TopMainCompProps> = ({ date }) => {
   const [eaten, setEaten] = useState(1655);
   const totalKcal = 3030;
   const kcalBurned = 539;

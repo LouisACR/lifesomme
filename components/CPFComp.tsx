@@ -4,7 +4,11 @@ import React, { useState } from "react";
 import Card from "./Card";
 import { Progress } from "./Progress";
 
-const CPFComp = () => {
+interface CPFProps {
+  date: Date;
+}
+
+const CPFComp: React.FC<CPFProps> = ({ date }) => {
   const [carbs, setCarbs] = useState(214);
   const [protein, setProtein] = useState(82);
   const [fat, setFat] = useState(56);
