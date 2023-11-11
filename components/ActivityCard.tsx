@@ -6,9 +6,17 @@ import { LuPlus } from "react-icons/lu";
 
 const nunito = Nunito_Sans({ subsets: ["latin"] });
 
-interface ActivityProps {
+export enum ActivityType {
+  "breakfast" = "breakfast",
+  "lunch" = "lunch",
+  "dinner" = "dinner",
+  "snack" = "snack",
+  "physical activity" = "physical activity",
+}
+
+export interface ActivityProps {
   date: Date;
-  type: "breakfast" | "lunch" | "dinner" | "snack" | "physical activity";
+  type: ActivityType;
 }
 
 const ActivityCard: React.FC<ActivityProps> = ({ date, type }) => {
