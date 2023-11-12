@@ -9,21 +9,26 @@ import { ActivityType } from "./ActivityCard";
 
 const nunito = Nunito_Sans({ subsets: ["latin"] });
 
-const ActivityBtn = ({
-  open,
-  type,
-  position,
-}: {
+interface ActivityBtnProps {
   open: boolean;
   type: ActivityType;
   position: string;
+  setOpen: (open: boolean) => void;
+}
+
+const ActivityBtn: React.FC<ActivityBtnProps> = ({
+  open,
+  type,
+  position,
+  setOpen,
 }) => {
   return (
     <div
+      onClick={() => setOpen(false)}
       className={cn(
-        "transition-all",
-        open ? "-translate-x-10 -translate-y-10" : "hidden",
-        "fixed h-20 w-20 bg-white right-0 bottom-0 rounded-full ease-in",
+        "hover:scale-110 cursor-pointer transition-all",
+        open ? "-translate-x-10 -translate-y-10" : "scale-0",
+        "fixed h-20 w-20 bg-white dark:bg-stone-800 right-0 bottom-0 rounded-full ease-in",
         open && position
       )}
     >
@@ -34,7 +39,7 @@ const ActivityBtn = ({
         height={50}
         className="relative top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
       />
-      <span className="relative left-[18%] -bottom-8 text-black font-medium capitalize text-justify">
+      <span className="flex relative -bottom-8 font-medium capitalize">
         {type}
       </span>
     </div>
@@ -46,44 +51,52 @@ const AddButton = () => {
   function handleClick() {
     setOpen(!open);
   }
+  function activityClick(type: ActivityType) {}
   return (
     <>
       <div
         className={cn(
           nunito.className,
           "fixed w-full h-full z-40 transition-all ease-in-out",
-          open ? "bg-stone-50/80 backdrop-blur-sm" : "bg-transparent z-0"
+          open
+            ? "bg-stone-50/80 dark:bg-stone-900/80 backdrop-blur-sm"
+            : "bg-transparent z-0"
         )}
       >
         <ActivityBtn
           type={ActivityType.breakfast}
           open={open}
-          position="top-1/3 left-1/2"
+          position="top-1/4 left-1/2"
+          setOpen={setOpen}
         />
         <ActivityBtn
           type={ActivityType.lunch}
           open={open}
-          position="top-1/2 left-[25%]"
+          position="top-1/3 left-[25%]"
+          setOpen={setOpen}
         />
         <ActivityBtn
           type={ActivityType.dinner}
           open={open}
-          position="top-1/2 left-[75%]"
+          position="top-1/3 left-[75%]"
+          setOpen={setOpen}
         />
         <ActivityBtn
           type={ActivityType.snack}
           open={open}
-          position="top-2/3 left-[33%]"
+          position="top-1/2 left-[33%]"
+          setOpen={setOpen}
         />
         <ActivityBtn
           type={ActivityType["physical activity"]}
           open={open}
-          position="top-2/3 left-[66%]"
+          position="top-1/2 left-[66%]"
+          setOpen={setOpen}
         />
       </div>
       <div
         onClick={handleClick}
-        className="fixed right-5 bottom-5 xl:right-20 xl:bottom-20 rounded-full bg-lifesomme w-14 h-14 hover:bg-lifesomme cursor-pointer transition-all z-50"
+        className="fixed right-5 bottom-20 xl:right-20 xl:bottom-20 rounded-full bg-lifesomme w-14 h-14 hover:scale-110 cursor-pointer transition-all z-50"
       >
         <LuPlus
           className={cn(
