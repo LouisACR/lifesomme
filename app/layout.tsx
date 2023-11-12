@@ -8,7 +8,7 @@ import ModalProvider from "@/providers/ModalProvider";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { TailwindIndicator } from "@/components/TailwindIndicator";
 
-export const lora = Lora({ subsets: ["latin"] });
+const lora = Lora({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Lifesomme",
